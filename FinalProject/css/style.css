@@ -1,0 +1,402 @@
+/* css for nav bar */
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mainbody {
+    background-color: #333;
+}
+
+/* Nav Bar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #FF6F61;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+body{
+    padding-top: 60px;
+}
+
+.weblogo img {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    width: auto; /* Adjust the width of the logo */
+    height: 45px; /* Automatically adjusts height to maintain aspect ratio */
+}
+
+.navbar .scrolled{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #FF3B30;
+}
+
+.weblogo img {
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+}
+
+.navbuttons {
+    display: flex;
+    gap: 25px;
+}
+
+.navbuttons button {
+    background: none;
+    border: none;
+    color: #FFEB3B;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbuttons button a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbuttons button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Change background on hover */
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3); /* Add shadow on hover */
+}
+
+.navbuttons .dropdown {
+    position: relative;
+}
+
+.navbuttons .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+}
+
+.navbuttons .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbuttons .dropdown-content a {
+    padding: 10px;
+    text-decoration: none;
+    color: #FFEB3B;
+    display: block;
+}
+
+#xboxbtn{
+    background-color: #66FF00;
+}
+
+#playbtn{
+    background-color: #00BFFF;
+}
+
+.cart button {
+    background: none;
+    border: none;
+    color: #FFEB3B;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.cart button a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* css for home.html and index.html*/
+
+.mainheader{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-shadow: #FF6F61;
+    font-size: x-large;
+    color: #FFEB3B;
+}
+
+.homecontentLeft{
+    float: inline-start;
+    text-align: center;
+    width: 60%;
+    padding: 15px;
+}
+
+.homecontentRight{
+    float: inline-start;
+    text-align: center;
+    width: 40%;
+    padding: 15px;
+}
+
+.homelayout{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#p1home{
+    font-family: monospace;
+    font-size: x-large;
+    text-spacing-trim: 10;
+    color: #FF6347;
+}
+
+#headermain{
+    font-family: monospace;
+    font-size: x-large;
+    text-spacing-trim: 10;
+    color: #FF6347;
+}
+
+#gifmario {
+    width: 300px; 
+    height: auto;
+    border: 8px solid #FF6347; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px 5px rgba(255, 99, 71, 0.7); 
+    transform: scale(1.1); 
+    animation: shake 0.5s infinite alternate; 
+    filter: contrast(1.5) saturate(1.2); 
+}
+
+.footermain{
+    font-family: monospace;
+    font-size: x-large;
+    text-spacing-trim: 10;
+    color: #fdfdfd;
+    text-align: center;
+}
+
+/* css for xboxgames, playstationgames, deals, pre-owned, consoles, html's*/
+.maincontent{
+    padding: 20px;
+    background-color: #333;
+}
+
+.columns{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.column{
+    padding: 15px;
+    border: 2px;
+    border-color: #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.leftcolumn{
+    width: 20%;
+}
+
+.rightcolumn{
+    width: 20%;
+}
+
+.middlecolumn{
+    width: 60%;
+}
+
+/*css for items*/
+.product{
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #FF6347;
+}
+
+.productimage img{
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.productdescription{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    margin-right: 20px;
+}
+
+.productname{
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFEB3B;
+}
+
+.productprice{
+    font-size: 16px;
+    color: #66FF00;
+}
+
+.addcart{
+    background-color: #030303;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+
+}
+
+.addcart:hover{
+    background-color: #FF3B30;
+}
+
+.gamedes{
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    width: 100%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.gamedes p{
+    margin: 0;
+}
+
+/*css for cart.html*/
+.cartcontent{
+    padding: 20px;
+}
+
+.columnscart{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.leftcolumncart{
+    width: 20%;
+}
+
+.rightcolumncart{
+    width: 20%;
+}
+
+.middlecolumncart{
+    width: 60%;
+}
+
+.product {
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #FF6347;
+}
+
+.productimage img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.productdescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    margin-right: 20px;
+}
+
+.productname {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFEB3B;
+}
+
+.productprice {
+    font-size: 16px;
+    color: #66FF00;
+}
+
+.deleteItem {
+    background-color: #0d0c0c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.deleteItem:hover {
+    background-color: darkred;
+}
+
+#cartpara{
+    font-family: monospace;
+    font-size: x-large;
+    text-spacing-trim: 10;
+    color: #FF6347;
+    text-align: center;
+}
+
+.subTotal, .taxes, .fullTotal{
+    font-family: monospace;
+    font-size: x-large;
+    text-spacing-trim: 10;
+    color: #FF6347;
+}
+
+/* css for logout button*/
+.logout-info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adds spacing between the text and the button */
+    /* This will add it to the right, before the navbar ends */
+    margin-right: 20px; 
+}
+
+.logout-info span {
+    color: #FFEB3B; /* Matches your other nav text */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.logout-info button {
+    background: none;
+    border: none;
+    color: #FFEB3B; /* Matches your other nav buttons */
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-info button a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logout-info button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Matches hover effect */
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3); /* Matches hover effect */
+}
+
