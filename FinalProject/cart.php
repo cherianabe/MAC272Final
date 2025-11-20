@@ -1,111 +1,114 @@
 <?php
 session_start();
+require_once 'connection.php';
 
+// 1. SECURITY: Kick out guests
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
+    exit;
+}
+
+// 2. ADD TO CART LOGIC
+// If a user clicked a button like <a href="cart.php?add=5">
+if (isset($_GET['add'])) {
+    $id = $_GET['add'];
+    
+    // Create the cart array if it doesn't exist
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+
+    // Add the product ID to the session cart
+    if (isset($_SESSION['cart'][$id])) {
+        $_SESSION['cart'][$id]++; // If already in cart, add 1 more
+    } else {
+        $_SESSION['cart'][$id] = 1; // If not, set to 1
+    }
+    
+    // REDIRECT LOGIC: Go back to the previous page (Shop More)
+    if(isset($_SERVER['HTTP_REFERER'])) {
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } else {
+        // If we don't know where they came from, go Home
+        header("Location: home.php");
+    }
+    exit;
+}
+
+// 3. REMOVE FROM CART LOGIC
+if (isset($_GET['remove'])) {
+    $id = $_GET['remove'];
+    unset($_SESSION['cart'][$id]);
+    header("Location: cart.php");
     exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <head>
-    <title>
-        Ready to pay
-    </title>
+    <meta charset="UTF-8">
+    <title>My Cart - Game Zone</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+    <style>
+        .cart-table { width: 100%; border-collapse: collapse; background: white; color: black; margin-top: 20px; }
+        .cart-table th, .cart-table td { padding: 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        .cart-table th { background-color: #FF6F61; color: white; }
+        .total-box { text-align: right; font-size: 20px; color: #FFEB3B; margin-top: 20px; font-family: monospace; }
+        .btn-checkout { background-color: #66FF00; color: black; padding: 10px 20px; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
 
 <body class="mainbody">
-    <nav class="navbar">
+    
+    <?php include 'navbar.php'; ?>
 
-        <div class="weblogo">
-            <a href="home.php"><img src="images/logonavbar/logo.png" alt="logo"></a>
-        </div>
+    <div class="maincontent" style="padding: 50px;">
+        <h2 style="color: #FFEB3B; border-bottom: 2px solid white; padding-bottom: 10px;">Your Shopping Cart</h2>
 
-        <div class="navbuttons">
+        <?php
+        if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+            echo "<h3 style='color:white; text-align:center; margin-top:50px;'>Your cart is empty! 🛒</h3>";
+            echo "<div style='text-align:center'><a href='home.php' style='color:#FFEB3B'>Go Shopping</a></div>";
+        } else {
+            echo '<table class="cart-table">';
+            echo '<tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th><th>Action</th></tr>';
 
-            <button><a href="home.php">Home</a></button>
+            $grand_total = 0;
+            
+            // Loop through every item in the session cart
+            foreach ($_SESSION['cart'] as $product_id => $quantity) {
+                // Get product info from DB
+                $sql = "SELECT * FROM products WHERE id = $product_id";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    
+                    // Check for sale price using 'saleprice' (no underscore)
+                    $price = ($row['saleprice'] > 0) ? $row['saleprice'] : $row['price'];
+                    $line_total = $price * $quantity;
+                    $grand_total += $line_total;
 
-        <div class="dropdown">
-            <button class="dropbtn">Videogames</button>
+                    echo "<tr>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>$" . $price . "</td>";
+                    echo "<td>" . $quantity . "</td>";
+                    echo "<td>$" . $line_total . "</td>";
+                    echo "<td><a href='cart.php?remove=" . $product_id . "' style='color:red;'>Remove</a></td>";
+                    echo "</tr>";
+                }
+            }
+            echo '</table>';
 
-            <div class="dropdown-content">
-                <a href="xboxgames.php" id="xboxbtn">Xbox</a>
-                <a href="playstationgames.php" id="playbtn">PlayStation</a>
-            </div>
-        </div>
-
-            <button><a href="consoles.php">Consoles</a></button>
-            <button><a href="deals.php">Deals</a></button>
-            <button><a href="pre-owned.php">Pre-Owned</a></button>
-        </div>
-
-        <div class="cart">
-            <button><a href="cart.php">Cart</a></button>
-        </div>
-
-        <div class="logout-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-            <button><a href="logout.php">Log Out</a></button>
-        </div>
-    </nav>
-
-    <div class="mainheader">
-        <br>
-        <br>
-        <h2>Cart, Ready to Buy?</h2>
-        <br>
-        <br>
-        <hr>
-        <br>
+            echo '<div class="total-box">';
+            echo '<p>Total: $' . number_format($grand_total, 2) . '</p>';
+            echo '<br>';
+            echo '<a href="checkout.php" class="btn-checkout">PAY NOW</a>';
+            echo '</div>';
+        }
+        ?>
     </div>
 
-    <div class="cartcontent">
-        <div class="columnscart">
-            <div class="leftcolumncart"></div>
-
-            <div class="middlecolumncart">
-                <div id="cartItems">
-
-                </div>
-                <br>
-                <hr>
-                <br>
-
-                <div class="priceBill">
-                    <div class="subTotal">
-                        <strong>Subtotal Price:</strong> $<span id="subTotal">0.00</span>
-                    </div>
-
-                    <div class="taxes">
-                        <strong>Estimated Taxes:</strong> $<span id="taxes">0.00</span>
-                    </div>
-
-                    <div class="fullTotal">
-                        <strong>Total:</strong> $<span id="fullTotal">0.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rightcolumncart"></div>
-        </div>
-    </div>
-
-    <div class="footermain">
-        <br>
-        <hr>
-        <br>
-        <footer>
-            <p>&copy; 2025 Game Zone. All rights reserved.</p>
-            <p>Contact us at: <a href="mailto:gamezone@outlook.com">gamezone@outlook.com</a></p>
-        </footer>
-        <br>
-    </div>
-
-<script src="javascript/script.js"></script>
 </body>
 </html>

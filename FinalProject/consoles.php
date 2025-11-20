@@ -22,31 +22,35 @@ session_start();
         </div>
 
         <div class="navbuttons">
-
             <button><a href="home.php">Home</a></button>
 
-        <div class="dropdown">
-            <button class="dropbtn">Videogames</button>
-
-            <div class="dropdown-content">
-                <a href="xboxgames.php" id="xboxbtn">Xbox</a>
-                <a href="playstationgames.php" id="playbtn">PlayStation</a>
+            <div class="dropdown">
+                <button class="dropbtn">Videogames</button>
+                <div class="dropdown-content">
+                    <a href="xboxgames.php" id="xboxbtn">Xbox</a>
+                    <a href="playstationgames.php" id="playbtn">PlayStation</a>
+                </div>
             </div>
-        </div>
-
+            
             <button><a href="consoles.php">Consoles</a></button>
             <button><a href="deals.php">Deals</a></button>
             <button><a href="pre-owned.php">Pre-Owned</a></button>
         </div>
 
-        <div class="cart">
-            <button><a href="cart.php">Cart</a></button>
+        <div class="logout-info">
+            
+            <button style="font-size: 24px; padding: 5px 10px;"><a href="cart.php" style="text-decoration:none;">🛒</a></button>
+
+            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <span style="margin-left: 15px;">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
+                <button><a href="logout.php">Log Out</a></button>
+            <?php else: ?>
+                <button style="margin-left: 15px;"><a href="login.php">Log In</a></button>
+                <button><a href="signup.php">Sign Up</a></button>
+            <?php endif; ?>
+            
         </div>
 
-        <div class="logout-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-            <button><a href="logout.php">Log Out</a></button>
-        </div>
     </nav>
 
     <div class="mainheader">

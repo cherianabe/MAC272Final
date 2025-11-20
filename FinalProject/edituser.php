@@ -13,10 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lastname = $_POST['lastname'];
     $username = $_POST['username'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $sql = "UPDATE users SET firstname=?, lastname=?, username=?, email=? WHERE id=?";
+    $sql = "UPDATE users SET firstname=?, lastname=?, username=?, email=?, password=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $firstname, $lastname, $username, $email, $id);
+    $stmt->bind_param("sssssi", $firstname, $lastname, $username, $email, $password, $id);
     $stmt->execute();
     
     header("Location: admin.php");
@@ -39,7 +40,7 @@ if (isset($_GET['id'])) {
 <body class="mainbody">
     <div class="form-container">
         <h2>Edit User</h2>
-        <form method="POST" action="edit_user.php">
+        <form method="POST" action="edituser.php">
             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
             <label style="text-align:left; display:block; color:#333;">First Name</label>
             <input type="text" name="firstname" value="<?php echo $user['firstname']; ?>" required>
@@ -49,6 +50,8 @@ if (isset($_GET['id'])) {
             <input type="text" name="username" value="<?php echo $user['username']; ?>" required>
             <label style="text-align:left; display:block; color:#333;">Email</label>
             <input type="email" name="email" value="<?php echo $user['email']; ?>" required>
+            <label style="text-align:left; display:block; color:#333;">Password</label>
+            <input type="text" name="password" value="<?php echo $user['password']; ?>" required>
             <button type="submit">Update User</button>
         </form>
         <p><a href="admin.php">Cancel</a></p>

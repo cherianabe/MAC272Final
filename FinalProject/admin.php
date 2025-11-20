@@ -2,7 +2,6 @@
 session_start();
 require_once 'connection.php';
 
-// Security Check
 if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit;
@@ -28,151 +27,84 @@ if (isset($_GET['delete_product'])) {
 <head>
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/style.css">
-    
     <style>
-        /* Embedded CSS just for Admin Panel to ensure it loads */
-        .admin-wrapper {
-            padding: 100px 20px; /* Space for fixed navbar */
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            color: #FF6F61;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-top: 40px;
-            font-family: monospace;
-            font-size: 24px;
-        }
-
-        .styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 16px;
-            font-family: sans-serif;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            background-color: white;
-        }
-
-        .styled-table thead tr {
-            background-color: #FF6F61;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        .styled-table th, .styled-table td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-        }
-
-        .styled-table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-
-        .styled-table tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #FF6F61;
-        }
-
-        .btn-action {
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .edit-btn {
-            background-color: #4CAF50; /* Green */
-            color: white;
-        }
-
-        .delete-btn {
-            background-color: #FF3B30; /* Red */
-            color: white;
-        }
-
-        .edit-btn:hover { background-color: #45a049; }
-        .delete-btn:hover { background-color: #d32f2f; }
+        /* Embedded CSS for Admin Table Layout */
+        .admin-wrapper { padding: 50px; color: black; }
+        .styled-table { width: 100%; border-collapse: collapse; background: white; margin: 25px 0; box-shadow: 0 0 20px rgba(0,0,0,0.15); }
+        .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #ddd; text-align: left; }
+        .styled-table th { background-color: #FF6F61; color: white; }
+        .btn-action { padding: 5px 10px; text-decoration: none; color: white; border-radius: 3px; margin-right: 5px; font-size: 14px; }
+        .btn-edit { background-color: green; }
+        .btn-delete { background-color: red; }
+        .btn-add { background-color: #333; color: #FFEB3B; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block; margin-bottom: 10px;}
     </style>
 </head>
 <body class="mainbody">
     
-    <nav class="navbar">
-        <div class="weblogo">
-            <span style="color:white; font-size:24px; font-weight:bold; font-family:monospace;">ADMIN PANEL</span>
-        </div>
-        <div class="logout-info">
-            <span>Welcome, Admin</span>
-            <button><a href="logout.php">Log Out</a></button>
-        </div>
-    </nav>
+    <?php include 'navbar.php'; ?>
 
     <div class="admin-wrapper">
-        <h2>Manage Users</h2>
+        
+        <h2 style="color: #FFEB3B; border-bottom: 2px solid white;">Manage Users</h2>
         <table class="styled-table">
-            <thead>
-                <tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Username</th><th>Email</th><th>Password</th><th>Role</th><th>Actions</th></tr>
-            </thead>
+            <thead><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Username</th><th>Email</th><th>Password</th><th>Role</th><th>Actions</th></tr></thead>
             <tbody>
             <?php
             $result = $conn->query("SELECT * FROM users");
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                        <td>".$row['id']."</td>
-                        <td>".$row['firstname']."</td>
-                        <td>".$row['lastname']."</td>
-                        <td>".$row['username']."</td>
-                        <td>".$row['email']."</td>
-                        <td>".$row['password']."</td>
-                        <td>".$row['role']."</td>
-                        <td>
-                            <a href='edit_user.php?id=".$row['id']."' class='btn-action edit-btn'>Edit</a>
-                            <a href='admin.php?delete_user=".$row['id']."' class='btn-action delete-btn' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</a>
-                        </td>
-                    </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='4'>No users found</td></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                    <td>".$row['id']."</td>
+                    <td>".$row['firstname']."</td>
+                    <td>".$row['lastname']."</td>
+                    <td>".$row['username']."</td>
+                    <td>".$row['email']."</td>
+                    <td>".$row['password']."</td>
+                    <td>".$row['role']."</td>
+                    <td>
+                        <a href='edit_user.php?id=".$row['id']."' class='btn-action btn-edit'>Edit</a>
+                        <a href='admin.php?delete_user=".$row['id']."' class='btn-action btn-delete' onclick='return confirm(\"Delete User?\")'>Delete</a>
+                    </td>
+                </tr>";
             }
             ?>
             </tbody>
         </table>
 
-        <h2>Manage Products</h2>
+        <br><br>
+
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="color: #FFEB3B; border-bottom: 2px solid white;">Manage Products</h2>
+            <a href="addproduct.php" class="btn-add">+ Add New Product</a>
+        </div>
+        
         <table class="styled-table">
             <thead>
-                <tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
+                <tr><th>ID</th><th>Name</th><th>Price</th><th>Sale Price</th><th>Platform</th><th>Category</th><th>Is pre-owned?</th><th>Stock</th><th>Actions</th></tr>
             </thead>
             <tbody>
             <?php
+            // Note: using your new column names 'saleprice'
             $result = $conn->query("SELECT * FROM products");
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                        <td>".$row['id']."</td>
-                        <td>".$row['name']."</td>
-                        <td>$".$row['price']."</td>
-                        <td>
-                            <a href='admin.php?delete_product=".$row['id']."' class='btn-action delete-btn' onclick='return confirm(\"Delete this product?\")'>Delete</a>
-                        </td>
-                    </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='4'>No products found</td></tr>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                    <td>".$row['id']."</td>
+                    <td>".$row['name']."</td>
+                    <td>$".$row['price']."</td>
+                    <td>$".$row['saleprice']."</td>
+                    <td>".$row['platform']."</td>
+                    <td>".$row['category']."</td>
+                    <td>".$row['ispreowned']."</td>
+                    <td>".$row['quantity']."</td>
+                    <td>
+                        <a href='editproduct.php?id=".$row['id']."' class='btn-action btn-edit'>Edit</a>
+                        <a href='admin.php?deleteproduct=".$row['id']."' class='btn-action btn-delete' onclick='return confirm(\"Delete Product?\")'>Delete</a>
+                    </td>
+                </tr>";
             }
             ?>
             </tbody>
         </table>
-    </div>
 
+    </div>
 </body>
 </html>

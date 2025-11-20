@@ -32,17 +32,22 @@ session_start();
             </div>
             
             <button><a href="consoles.php">Consoles</a></button>
-            <button><a href="cart.php">Cart</a></button>
+            <button><a href="deals.php">Deals</a></button>
+            <button><a href="pre-owned.php">Pre-Owned</a></button>
         </div>
 
         <div class="logout-info">
+            
+            <button style="font-size: 24px; padding: 5px 10px;"><a href="cart.php" style="text-decoration:none;">🛒</a></button>
+
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
+                <span style="margin-left: 15px;">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
                 <button><a href="logout.php">Log Out</a></button>
             <?php else: ?>
-                <button><a href="login.php">Log In</a></button>
+                <button style="margin-left: 15px;"><a href="login.php">Log In</a></button>
                 <button><a href="signup.php">Sign Up</a></button>
             <?php endif; ?>
+            
         </div>
 
     </nav>

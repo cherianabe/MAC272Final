@@ -234,7 +234,7 @@ body{
     color: #66FF00;
 }
 
-.addcart{
+.addcart {
     background-color: #030303;
     color: white;
     border: none;
@@ -242,9 +242,10 @@ body{
     cursor: pointer;
     transition: background-color 0.3s;
     width: 100%;
-    text-align: center;
     box-sizing: border-box;
-
+    display: block; 
+    text-align: center;
+    text-decoration: none;
 }
 
 .addcart:hover{
