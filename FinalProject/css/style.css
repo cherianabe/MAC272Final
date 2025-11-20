@@ -400,3 +400,48 @@ body{
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3); /* Matches hover effect */
 }
 
+/* Styles for Login, Signup, and Forms */
+.form-container {
+    width: 350px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #fff; /* White box on dark background */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 111, 97, 0.5); /* Glow effect using your theme color */
+    text-align: center;
+}
+
+.form-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FF6F61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #FF3B30;
+}
+
+.form-container p {
+    color: #333;
+    margin-top: 15px;
+}
