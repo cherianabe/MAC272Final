@@ -102,19 +102,6 @@ body{
     background-color: #00BFFF;
 }
 
-.cart button {
-    background: none;
-    border: none;
-    color: #FFEB3B;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.cart button a {
-    text-decoration: none;
-    color: inherit;
-}
-
 /* css for home.html and index.html*/
 
 .mainheader{
@@ -444,4 +431,12 @@ body{
 .form-container p {
     color: #333;
     margin-top: 15px;
+}
+
+/*Cart icon*/
+.cart-icon {
+    font-size: 24px;
+    text-decoration: none;
+    vertical-align: middle;
+    padding-bottom: 3px;
 }

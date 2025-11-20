@@ -1,11 +1,5 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,32 +21,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </div>
 
         <div class="navbuttons">
-
             <button><a href="home.php">Home</a></button>
 
-        <div class="dropdown">
-            <button class="dropbtn">Videogames</button>
-
-            <div class="dropdown-content">
-                <a href="xboxgames.php" id="xboxbtn">Xbox</a>
-                <a href="playstationgames.php" id="playbtn">PlayStation</a>
+            <div class="dropdown">
+                <button class="dropbtn">Videogames</button>
+                <div class="dropdown-content">
+                    <a href="xboxgames.php" id="xboxbtn">Xbox</a>
+                    <a href="playstationgames.php" id="playbtn">PlayStation</a>
+                </div>
             </div>
-        </div>
             
             <button><a href="consoles.php">Consoles</a></button>
-            <button><a href="deals.php">Deals</a></button>
-            <button><a href="pre-owned.php">Pre-Owned</a></button>
-        </div>
-
-        <div class="cart">
             <button><a href="cart.php">Cart</a></button>
         </div>
 
         <div class="logout-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-            <button><a href="logout.php">Log Out</a></button>
+            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
+                <button><a href="logout.php">Log Out</a></button>
+            <?php else: ?>
+                <button><a href="login.php">Log In</a></button>
+                <button><a href="signup.php">Sign Up</a></button>
+            <?php endif; ?>
         </div>
-        </nav>
+
+    </nav>
 
     <div class="mainheader">
         <br>
