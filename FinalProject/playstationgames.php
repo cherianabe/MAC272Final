@@ -19,7 +19,7 @@ require_once 'connection.php';
 
     <div class="mainheader">
         <br><br>
-        <h2>Xbox Games</h2>
+        <h2>🎮 PlayStation 🎮</h2>
         <br><br>
         <hr>
         <br>

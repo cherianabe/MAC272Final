@@ -51,11 +51,36 @@ if (isset($_GET['remove'])) {
     <title>My Cart - Game Zone</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .cart-table { width: 100%; border-collapse: collapse; background: white; color: black; margin-top: 20px; }
-        .cart-table th, .cart-table td { padding: 15px; border-bottom: 1px solid #ddd; text-align: left; }
-        .cart-table th { background-color: #FF6F61; color: white; }
-        .total-box { text-align: right; font-size: 20px; color: #FFEB3B; margin-top: 20px; font-family: monospace; }
-        .btn-checkout { background-color: #66FF00; color: black; padding: 10px 20px; text-decoration: none; font-weight: bold; }
+        .cart-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            color: black; 
+            margin-top: 20px; 
+        }
+        .cart-table th, .cart-table td { 
+            padding: 15px; 
+            border-bottom: 1px solid #ddd; 
+            text-align: left; 
+        }
+        .cart-table th { 
+            background-color: #FF6F61; 
+            color: white; 
+        }
+        .total-box { 
+            text-align: right; 
+            font-size: 20px; 
+            color: #FFEB3B; 
+            margin-top: 20px; 
+            font-family: monospace; 
+        }
+        .btn-checkout { 
+            background-color: #66FF00; 
+            color: black; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
     </style>
 </head>
 
@@ -76,16 +101,13 @@ if (isset($_GET['remove'])) {
 
             $grand_total = 0;
             
-            // Loop through every item in the session cart
             foreach ($_SESSION['cart'] as $product_id => $quantity) {
-                // Get product info from DB
                 $sql = "SELECT * FROM products WHERE id = $product_id";
                 $result = $conn->query($sql);
                 
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
                     
-                    // Check for sale price using 'saleprice' (no underscore)
                     $price = ($row['saleprice'] > 0) ? $row['saleprice'] : $row['price'];
                     $line_total = $price * $quantity;
                     $grand_total += $line_total;
